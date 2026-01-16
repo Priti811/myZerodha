@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path"); // ✅ REQUIRED
 const cors = require("cors");
 
 const { HoldingsModel } = require("./model/HoldingsModel");
@@ -18,18 +19,18 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-
-app.use(cookieParser());
+// -------------------middlewares---------------------
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["http://localhost:3001"],
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-app.use(bodyParser.json());
 
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
@@ -200,6 +201,9 @@ app.use(bodyParser.json());
 //   res.send("Done!");
 // });
 
+// ------------------- api routes---------------------
+app.use("/", authRoute);
+
 app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
   res.json(allHoldings);
@@ -228,6 +232,33 @@ app.get("/allOrders", async (req, res) => {
   res.json(orders);
 });
 
+// 👉 Serve frontend + dashboard build
+
+/* ---------------- FRONTEND BUILD ---------------- */
+const __root = process.cwd();
+
+const frontendPath = path.join(__root, "../frontend/build");
+const dashboardPath = path.join(__root, "../dashboard/build");
+// frontend (login/signup)
+app.use(express.static(frontendPath));
+
+// dashboard
+app.use(
+  "/dashboard",
+  express.static(dashboardPath)
+);
+
+/* ---------------- SPA FALLBACKS ---------------- */
+
+app.use("/dashboard", (req, res) => {
+  res.sendFile(path.join(dashboardPath, "index.html"));
+});
+
+app.use((req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
+
+/* ---------------- SERVER ---------------- */
 app.listen(PORT, () => {
   console.log("App started!");
   mongoose.connect(uri, {
@@ -236,6 +267,3 @@ app.listen(PORT, () => {
   });
   console.log("MongoDB Connected!");
 });
-
-
-app.use("/", authRoute);
