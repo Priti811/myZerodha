@@ -148,55 +148,7 @@ myZerodha/
 ---
 
 
-### Data Models
 
-#### User Model
-```javascript
-{
-  username: String,
-  password: String (hashed),
-  email: String,
-  createdAt: Date
-}
-```
-
-#### Holdings Model
-```javascript
-{
-  userId: ObjectId,
-  name: String,
-  qty: Number,
-  avg: Number,
-  price: Number,
-  net: String,
-  day: String
-}
-```
-
-#### Orders Model
-```javascript
-{
-  userId: ObjectId,
-  symbol: String,
-  qty: Number,
-  price: Number,
-  type: String (buy/sell),
-  status: String,
-  createdAt: Date
-}
-```
-
-#### Positions Model
-```javascript
-{
-  userId: ObjectId,
-  symbol: String,
-  qty: Number,
-  avg: Number,
-  day: String,
-  isLoss: Boolean
-}
-```
 
 ---
 
@@ -221,13 +173,6 @@ cd backend
 npm install
 ```
 
-Create a `.env` file in the backend directory:
-```env
-PORT=3002
-MONGO_URL=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-NODE_ENV=development
-```
 
 Start the backend:
 ```bash
@@ -369,18 +314,6 @@ npm test
 # Dashboard tests
 cd dashboard
 npm test
-```
-
----
-
-## 📚 Environment Variables
-
-### Backend (.env)
-```env
-PORT=3002
-MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net/myzerodha
-JWT_SECRET=your_super_secret_jwt_key_12345
-NODE_ENV=development
 ```
 
 ---
