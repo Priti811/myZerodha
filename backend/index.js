@@ -232,6 +232,10 @@ app.get("/allOrders", async (req, res) => {
   res.json(orders);
 });
 
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
+
 // 👉 Serve frontend + dashboard build
 
 /* ---------------- FRONTEND BUILD ---------------- */
@@ -243,10 +247,7 @@ const dashboardPath = path.join(__root, "../dashboard/build");
 app.use(express.static(frontendPath));
 
 // dashboard
-app.use(
-  "/dashboard",
-  express.static(dashboardPath)
-);
+app.use("/dashboard", express.static(dashboardPath));
 
 /* ---------------- SPA FALLBACKS ---------------- */
 
