@@ -12,7 +12,7 @@ const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
 
 const cookieParser = require("cookie-parser");
-const authRoute = require("../backend/routes/AuthRoute.js");
+const authRoute = require("./Routes/AuthRoute.js");
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
