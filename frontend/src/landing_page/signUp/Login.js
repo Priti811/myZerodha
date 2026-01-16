@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import api from "../api/axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,20 +31,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    const res = await api.post("/api/auth/login", {
+      email,
+      password,
+    });
 
-      const data = await res.json();
+    console.log(res.data);
 
-      if (data.success) {
-        window.location.href = "/";
-      }
-    } catch (error) {
-      handleError("Login failed");
-    }
+    navigate("/dashboard");
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+  }
 
     setInputValue({ email: "", password: "" });
   };

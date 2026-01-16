@@ -26,7 +26,9 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:5173", // local frontend (Vite)
+      "https://myzerodha-frontend.onrender.com" // future frontend
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
