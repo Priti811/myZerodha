@@ -148,7 +148,13 @@ myZerodha/
 ---
 
 
+🌐 Live Demo
 
+Frontend (Landing & Authentication)
+👉 https://myzerodha-frontend.onrender.com
+
+Dashboard (Trading Panel)
+👉 https://myzerodha-dashboard.onrender.com
 
 ---
 
